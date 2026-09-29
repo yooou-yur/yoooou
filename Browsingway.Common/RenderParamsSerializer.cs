@@ -1,4 +1,4 @@
-using Browsingway.Common.Ipc;
+﻿using Browsingway.Common.Ipc;
 using FlatSharp;
 using System;
 

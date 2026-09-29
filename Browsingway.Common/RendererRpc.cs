@@ -1,4 +1,4 @@
-using Browsingway.Common.Ipc;
+﻿using Browsingway.Common.Ipc;
 using System;
 using System.Threading.Tasks;
 

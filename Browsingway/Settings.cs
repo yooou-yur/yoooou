@@ -1,4 +1,4 @@
-using Dalamud.Interface;
+﻿using Dalamud.Interface;
 using Dalamud.Bindings.ImGui;
 using System.Numerics;
 using System.Text.RegularExpressions;

@@ -1,4 +1,4 @@
-using Browsingway.Common;
+﻿using Browsingway.Common;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;

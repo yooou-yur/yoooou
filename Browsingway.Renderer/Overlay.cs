@@ -1,4 +1,4 @@
-using Browsingway.Common.Ipc;
+﻿using Browsingway.Common.Ipc;
 using CefSharp;
 using CefSharp.OffScreen;
 using CefSharp.Structs;

@@ -1,4 +1,4 @@
-using CefSharp.Structs;
+﻿using CefSharp.Structs;
 using System.Runtime.InteropServices;
 
 namespace Browsingway.Renderer;

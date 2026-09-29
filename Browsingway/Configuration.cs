@@ -1,4 +1,4 @@
-using Browsingway.Common.Ipc;
+﻿using Browsingway.Common.Ipc;
 using Dalamud.Configuration;
 
 namespace Browsingway;

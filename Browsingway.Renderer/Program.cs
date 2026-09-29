@@ -1,4 +1,4 @@
-using Browsingway.Common;
+﻿using Browsingway.Common;
 using Browsingway.Common.Ipc;
 using System.Diagnostics;
 using System.Drawing;
