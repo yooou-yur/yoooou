@@ -36,8 +36,8 @@ internal class RenderProcess : IDisposable
 		IPluginLog pluginLog
 	)
 	{
-		_keepAliveHandleName = $"BrowsingwayRendererKeepAlive{pid}";
-		_ipcChannelName = $"BrowsingwayRendererIpcChannel{pid}";
+		_keepAliveHandleName = $"GarlandWikiOverlayRendererKeepAlive{pid}";
+		_ipcChannelName = $"GarlandWikiOverlayRendererIpcChannel{pid}";
 		_dependencyManager = dependencyManager;
 		_pluginDir = pluginDir;
 		_configDir = configDir;
@@ -100,7 +100,7 @@ internal class RenderProcess : IDisposable
 
 		if (_restartCount >= _maxRestarts)
 		{
-			Services.PluginLog.Error("Render process is crashing in a loop - please check the logs. No further restarts will be attempted until Browsingway is restarted.");
+			Services.PluginLog.Error("渲染进程持续崩溃；请检查日志。重新启动 Garland Wiki Overlay 前不会再次尝试。");
 			Stop();
 			Rpc?.Dispose();
 			Rpc = null;
@@ -207,7 +207,7 @@ internal class RenderProcess : IDisposable
 		Process process = new();
 		process.StartInfo = new ProcessStartInfo
 		{
-			FileName = Path.Combine(_pluginDir, "renderer", "Browsingway.Renderer.exe"),
+			FileName = Path.Combine(_pluginDir, "renderer", "GarlandWikiOverlay.Renderer.exe"),
 			Arguments = RenderParamsSerializer.Serialize(processArgs),
 			UseShellExecute = false,
 			CreateNoWindow = true,

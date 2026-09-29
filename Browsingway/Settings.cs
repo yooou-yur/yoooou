@@ -30,7 +30,20 @@ internal class Settings : IDisposable
 	public Settings()
 	{
 		Services.PluginInterface.UiBuilder.OpenConfigUi += () => _open = true;
-		Config = Services.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
+		Configuration? existingConfig = Services.PluginInterface.GetPluginConfig() as Configuration;
+		Config = existingConfig ?? new Configuration
+		{
+			Inlays = new List<InlayConfiguration>
+			{
+				new()
+				{
+					Guid = Guid.NewGuid(),
+					Name = "Garland",
+					Url = "https://www.garlandtools.cn/db/"
+				}
+			}
+		};
+		if (existingConfig is null) { Services.PluginInterface.SavePluginConfig(Config); }
 	}
 
 	public void Dispose() { }
@@ -232,7 +245,7 @@ internal class Settings : IDisposable
 		                               | ImGuiWindowFlags.NoScrollbar
 		                               | ImGuiWindowFlags.NoScrollWithMouse
 		                               | ImGuiWindowFlags.NoCollapse;
-		ImGui.Begin("Browsingway Settings", ref _open, windowFlags);
+		ImGui.Begin("Garland Wiki Overlay 设置", ref _open, windowFlags);
 
 		RenderPaneSelector();
 
@@ -328,10 +341,10 @@ internal class Settings : IDisposable
 		if (ImGui.CollapsingHeader("Command Help", ImGuiTreeNodeFlags.DefaultOpen))
 		{
 			// TODO: If this ever gets more than a few options, should probably colocate help with the defintion. Attributes?
-			ImGui.Text("/bw config");
+			ImGui.Text("/gwo config");
 			ImGui.Text("Open this configuration window.");
 			ImGui.Dummy(new Vector2(0, 5));
-			ImGui.Text("/bw overlay [overlayCommandName] [setting] [value]");
+			ImGui.Text("/gwo overlay [overlayCommandName] [setting] [value]");
 			ImGui.TextWrapped(
 				"Change a setting for an overlay.\n" +
 				"\toverlayCommandName: The overlay to edit. Use the 'Command Name' shown in its config.\n" +

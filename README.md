@@ -1,56 +1,38 @@
-Browsingway
-===========
+# Garland Wiki Overlay
 
-Dalamud plugin for rendering browser overlays in-game.
+国服 Windows 卫月插件。首次启动时创建 Garland Tools 覆盖层；在 Garland 中点击指向 `ff14.huijiwiki.com` 的 Wiki 链接时，目标页面在当前游戏内浏览器窗口打开。插件命令为 `/gwo config`。
 
-Enables you to play in fullscreen (and G-SYNC) while having access to e.g. ACT overlays.
+这是 [Browsingway](https://github.com/Styr1x/Browsingway) 的独立修改版，保留原项目的浏览器覆盖层功能。修改说明见 [NOTICE.md](NOTICE.md)，许可协议见 [LICENSE](LICENSE)。此项目与原作者的发布渠道无关。
 
-This project is a fork off ackwell's BrowserHost plugin (https://github.com/ackwell/BrowserHost). The original scope of the project was to add Endwalker support and nothing more. However since then a few new features and improvements have been added:
+## 本地构建
 
-* DPI awareness
-    * The displayed browser overlays are scaled correctly in regards to your display's dpi. This essentially means you get the same sized output as you get from your browser.
-* Zoom support
-    * Overlays can be zoomed in and out to make them smaller and bigger, same way your browser's zoom works.
-* Opacity support
-    * Make your overlays as transparent as you like.
-* Framerate configurable
-    * The rendering framerate for each individual overlay can now be set.
-* Disable support
-    * Completly disable an overlay without deleting it.
-* Mute support
-   * Can mute specific overlays.
-* ACT optimizations
-   * Optimizes the overlay handling for ACT overlays. Also enables and disables them depending on if ACT itself is running.
-* Updated Chromium version
-    * 108.0.5359.125
-* Project cleanup
-    * Everything now uses .net 7
-    * Nullable enabled
-    * DalamudPackager for easier deployment
-    * Some source cleanups
-* Minor stability improvements
+工作目录中的 `.tools/dotnet` 为 .NET 10 SDK，`.tools/dotnet9` 为预置的 .NET 9 运行时，`.cache/nuget` 为依赖缓存；这些目录不会加入 Git。当前构建脚本允许 FlatSharp 编译器在 .NET 10 上运行。系统临时目录用于构建中间文件，成功生成的插件 ZIP 会复制到 `dist/`。
 
+使用 PowerShell 运行：
 
-### Future (Roadmap)
-The initial release focused on making the overlays work again, the focus now rests on rewriting core parts to make the plugin more robust and easier to maintain.
+```powershell
+./build.ps1
+```
 
-You can also open an issue for new feature requests.
+脚本默认读取国服卫月开发文件目录 `%APPDATA%\XIVLauncherCN\addon\Hooks\dev`。如安装位置不同，可传入 `-DalamudHome`：
 
-## ACT support ##
-For ACT overlays to work correctly the overlay WSServer has to be enabled. ACT also provides an URL generator that will create the correct URLs to use within Browsingway:
+```powershell
+./build.ps1 -DalamudHome 'D:\路径\addon\Hooks\dev'
+```
 
-![image](https://user-images.githubusercontent.com/569324/148692825-f29e41ae-cec5-4144-974f-394e14ec108a.png)
+本项目使用 .NET 和 NuGet 编译；`uv` 用于 Python 项目，不能替代 .NET SDK。
 
-You might also want to enable 'ACT optimizations' inside Browsingway for the specifc overlays, this will also enable and disable them automatically if ACT is running or not running.
+## 安装与使用
 
-## Linux Support ##
+构建得到的 `dist/GarlandWikiOverlay-0.1.0.zip` 是卫月插件安装包。首次加载会从原 Browsingway 项目的发布页下载 CefSharp 浏览器依赖，并用 SHA256 校验；它不包含在 ZIP 中。该依赖下载需要能访问 GitHub。
 
-Browsingway works in Linux, but is experimental and *not supported*.
+插件与原 Browsingway 使用不同的程序集、配置目录、命令、渲染器名称和进程间通信标识，可作为独立插件安装。Wiki 页面打开后，可用浏览器返回快捷键或在设置中重新导航到 Garland；聊天命令 `/gwo overlay garland reload` 会重新加载 Garland 默认地址。
 
-- Newer versions of Dalamud / XIVLauncher.Core include the necessary .NET dependencies, so you should not install your own into the Wine/Proton prefix - they can conflict and cause crashing issues.
-- If you encounter performance issues, try using a more recent version of Proton to run FFXIV. Proton-GE 10.27 works well, but others may also. 
-- You may need to use a custom fork of XIVLauncher in order to change Wine/Proton versions.
+## 发布到自己的卫月自定义仓库
 
-### Troubleshooting
-- Delete the contents of `~/.xlcore/pluginConfigs/Browsingway`. This should cause the plugin to reinstall CEF on next launch. This is most likely to help if you've switched Wine/Proton versions since installing CEF (XIVLauncher may do this on its own as part of its own updates, though this is rare.)
-- If your Wine version has changed, you may need to clear your Wine or Proton prefix. This can be done from the `Wine` tab in XIVLauncher's settings.
+1. 在自己的 GitHub 账户新建仓库，上传本目录的源码；不要把 `.tools/`、`.cache/` 或 `dist/` 提交到 Git。
+2. 运行 `./build.ps1`，把 `dist/GarlandWikiOverlay-0.1.0.zip` 上传到该仓库的 `v0.1.0` Release。
+3. 将 `repo.template.json` 中的 `OWNER`、`REPOSITORY` 替换为真实账户和仓库名，保存为仓库根目录的 `repo.json`；同时把 `Browsingway/GarlandWikiOverlay.json` 的 `RepoUrl` 填为实际源码仓库地址。
+4. 将 `https://raw.githubusercontent.com/OWNER/REPOSITORY/main/repo.json` 添加到卫月的自定义插件仓库设置。仓库清单必须是可匿名访问的有效 JSON，Release ZIP 链接也必须可公开下载。
+
+这套清单仅发布本插件，不会修改官方插件仓库或原 Browsingway 仓库。GitHub 用户名和新仓库名确定后，应先替换占位符，再对公开链接执行下载检查。发布二进制时同时公开对应版本的完整 GPL-3.0 源码、LICENSE 和 NOTICE.md。

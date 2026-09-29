@@ -13,7 +13,7 @@ namespace Browsingway;
 
 public class Plugin : IDalamudPlugin
 {
-	private const string _command = "/bw";
+	private const string _command = "/gwo";
 
 	private readonly DependencyManager _dependencyManager;
 	private readonly Dictionary<Guid, Overlay> _overlays = new();
@@ -50,7 +50,7 @@ public class Plugin : IDalamudPlugin
 
 	// Required for LivePluginLoader support
 	public string AssemblyLocation { get; } = Assembly.GetExecutingAssembly().Location;
-	public string Name => "Browsingway";
+	public string Name => "Garland Wiki Overlay";
 
 	public void Dispose()
 	{
@@ -87,7 +87,7 @@ public class Plugin : IDalamudPlugin
 		{
 			if (!msg.HasDxSharedTexturesSupport)
 			{
-				Services.PluginLog.Error("Could not initialize shared textures transport. Browsingway will not work.");
+				Services.PluginLog.Error("无法初始化共享纹理传输，Garland Wiki Overlay 无法运行。");
 				return;
 			}
 
@@ -141,7 +141,7 @@ public class Plugin : IDalamudPlugin
 
 		// Hook up the main BW command
 		Services.CommandManager.AddHandler(_command,
-			new CommandInfo(HandleCommand) {HelpMessage = "Control Browsingway from the chat line! Type '/bw config' or open the settings for more info.", ShowInHelp = true});
+			new CommandInfo(HandleCommand) {HelpMessage = "使用 /gwo config 打开 Garland Wiki Overlay 设置。", ShowInHelp = true});
 	}
 
 	private (bool, long) OnWndProc(WindowsMessage msg, ulong wParam, long lParam)

@@ -4,3 +4,6 @@ obj/
 out/
 packages/
 *.sln.DotSettings.user
+.tools/
+.cache/
+dist/

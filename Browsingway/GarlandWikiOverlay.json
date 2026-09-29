@@ -1,0 +1,18 @@
+﻿{
+    "Name": "Garland Wiki Overlay",
+    "Author": "独立修改者（原作者 Styr1x、ackwell）",
+    "Punchline": "在游戏内查看 Garland 数据和灰机 Wiki。",
+    "Description": "基于 GPL-3.0 的 Browsingway 修改。Garland Tools 中由用户点击打开的灰机 Wiki 链接会在当前游戏内浏览器窗口加载。使用 /gwo config 配置覆盖层。原项目：Styr1x/Browsingway；更早来源：ackwell/BrowserHost。",
+    "Tags": [
+        "framework",
+        "browser",
+        "inlay",
+        "overlay",
+        "chromium",
+        "act",
+        "youtube",
+        "website",
+        "video"
+    ],
+    "Changelog": "0.1.0：独立插件身份；Garland 的灰机 Wiki 链接在当前覆盖层打开。"
+}

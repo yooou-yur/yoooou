@@ -210,7 +210,7 @@ public class DependencyManager : IDisposable
 
 		ImGui.SetNextWindowSize(new Vector2(1300, 350), ImGuiCond.Always);
 		ImGuiWindowFlags windowFlags = ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize;
-		ImGui.Begin("Browsingway dependencies", windowFlags);
+		ImGui.Begin("Garland Wiki Overlay 依赖项", windowFlags);
 		if (_texIcon is not null)
 			ImGui.Image(_texIcon.GetWrapOrEmpty().Handle, new Vector2(256, 256));
 
@@ -218,9 +218,9 @@ public class DependencyManager : IDisposable
 
 		string version = _missingDependencies?.First()?.Version ?? "???";
 		string checksum = _missingDependencies?.First()?.Checksum ?? "???";
-		ImGui.Text("Browsingway requires additional dependencies to function.\n" +
-		           "These are not shipped with the plugin due to their size.\n\n" +
-		           "The files are hosted on GitHub and are verified with SHA256 checksums:\n" +
+		ImGui.Text("Garland Wiki Overlay 需要另外下载浏览器依赖。\n" +
+		           "由于文件较大，插件安装包未包含这些文件。\n\n" +
+		           "依赖文件由原项目托管在 GitHub，下载后会校验 SHA256：\n" +
 		           "https://github.com/Styr1x/Browsingway/releases/tag/cef-binaries\n\n" +
 		           "CefSharp: " + version + "\n" +
 		           "SHA256: " + checksum

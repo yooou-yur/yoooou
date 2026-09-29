@@ -11,9 +11,10 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<LangVersion>latestmajor</LangVersion>
-		<Version>1.7.2.0</Version>
+		<AssemblyName>GarlandWikiOverlay.Renderer</AssemblyName>
+		<Version>0.1.0.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<OutputPath>..\out</OutputPath>
+		<OutputPath Condition="'$(GWO_BUILD_ROOT)' == ''">..\out</OutputPath>
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<SelfContained>false</SelfContained>
@@ -51,8 +52,8 @@
 	</ItemGroup>
 
 	<Target Name="WinRes" AfterTargets="PostBuildEvent">
-		<Exec Command="winres\go-winres.exe patch --in winres\Browsingway.json $(OutputPath)\Browsingway.Renderer.exe" Condition=" '$(OS)' == 'Windows_NT' " />
+		<Exec Command="winres\go-winres.exe patch --in winres\Browsingway.json $(OutputPath)\GarlandWikiOverlay.Renderer.exe" Condition=" '$(OS)' == 'Windows_NT' " />
 		<Exec Command="chmod +x winres/go-winres.elf" Condition=" '$(OS)' != 'Windows_NT' " />
-		<Exec Command="winres/go-winres.elf patch --in winres/Browsingway.json $(OutputPath)/Browsingway.Renderer.exe" Condition=" '$(OS)' != 'Windows_NT' " />
+		<Exec Command="winres/go-winres.elf patch --in winres/Browsingway.json $(OutputPath)/GarlandWikiOverlay.Renderer.exe" Condition=" '$(OS)' != 'Windows_NT' " />
 	</Target>
 </Project>

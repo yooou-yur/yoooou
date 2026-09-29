@@ -56,6 +56,7 @@ internal class Overlay : IDisposable
 		_browser = new ChromiumWebBrowser(_url, automaticallyCreateBrowser: false, requestContext: rc);
 		_browser.RenderHandler = RenderHandler;
 		_browser.MenuHandler = new CefMenuHandler();
+		_browser.LifeSpanHandler = new GarlandWikiLifeSpanHandler();
 		Rect size = RenderHandler.GetViewRect();
 
 		// General _browser config

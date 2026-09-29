@@ -1,0 +1,6 @@
+<Project>
+	<PropertyGroup Condition="'$(GWO_BUILD_ROOT)' != ''">
+		<BaseIntermediateOutputPath>$(GWO_BUILD_ROOT)\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+		<OutputPath>$(GWO_BUILD_ROOT)\out\</OutputPath>
+	</PropertyGroup>
+</Project>
