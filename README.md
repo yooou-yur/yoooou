@@ -37,4 +37,3 @@
 3. 在卫月自定义插件仓库设置中添加 `https://raw.githubusercontent.com/yooou-yur/yoooou/main/repo.json`。
 
 这套清单仅发布本插件，不会修改官方插件仓库或原 Browsingway 仓库。发布二进制时，同时公开对应版本的完整 GPL-3.0 源码、LICENSE 和 NOTICE.md。
-
