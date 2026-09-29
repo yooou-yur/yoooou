@@ -1,39 +1,42 @@
 # Garland Wiki Overlay
 
-国服 Windows 卫月插件。首次启动时创建 Garland Tools 覆盖层；在 Garland 中点击指向 `ff14.huijiwiki.com` 的 Wiki 链接时，目标页面在当前游戏内浏览器窗口打开。插件命令为 `/gwo config`。
+在《最终幻想 XIV》国服 Windows 客户端内查看 [Garland Tools 中文数据库](https://www.garlandtools.cn/db/)，并从副本等资料页直接阅读[灰机 Wiki](https://ff14.huijiwiki.com/) 内容。
 
-这是 [Browsingway](https://github.com/Styr1x/Browsingway) 的独立修改版，保留原项目的浏览器覆盖层功能。修改说明见 [NOTICE.md](NOTICE.md)，许可协议见 [LICENSE](LICENSE)。此项目与原作者的发布渠道无关。
+插件会在游戏中创建一个 Garland 浏览器覆盖层。在 Garland 页面中点击指向灰机 Wiki 的链接时，Wiki 页面会在**同一个游戏内覆盖层**打开，不会为这类链接弹出独立浏览器窗口。
 
-## 本地构建
+## 安装
 
-工作目录中的 `.tools/dotnet` 为 .NET 10 SDK，`.tools/dotnet9` 为预置的 .NET 9 运行时，`.cache/nuget` 为依赖缓存；这些目录不会加入 Git。当前构建脚本允许 FlatSharp 编译器在 .NET 10 上运行。系统临时目录用于构建中间文件，成功生成的插件 ZIP 会复制到 `dist/` 并随对应源码版本发布。
+需要已安装卫月的国服 Windows 客户端。此插件通过独立的卫月自定义插件仓库分发：
 
-使用 PowerShell 运行：
+1. 打开卫月插件安装器，在“自定义插件仓库”设置中添加以下地址，并刷新仓库列表：
 
-```powershell
-./build.ps1
-```
+   ```text
+   https://raw.githubusercontent.com/yooou-yur/yoooou/main/repo.json
+   ```
 
-脚本默认读取国服卫月开发文件目录 `%APPDATA%\XIVLauncherCN\addon\Hooks\dev`。如安装位置不同，可传入 `-DalamudHome`：
+2. 在插件安装器中找到 **Garland Wiki Overlay** 并安装。
+3. 首次加载时，按游戏内提示安装浏览器依赖。该依赖由 [Browsingway 发布页](https://github.com/Styr1x/Browsingway/releases/tag/cef-binaries)提供，插件会校验下载文件的 SHA-256；此步骤需要能够访问 GitHub。
 
-```powershell
-./build.ps1 -DalamudHome 'D:\路径\addon\Hooks\dev'
-```
+## 使用
 
-本项目使用 .NET 和 NuGet 编译；`uv` 用于 Python 项目，不能替代 .NET SDK。
+首次安装后，游戏中会出现名为 **Garland** 的覆盖层，默认打开 Garland Tools 中文数据库。可以像使用网页一样搜索副本、查看资料；如果 Garland 页面提供灰机 Wiki 链接，点击后会在这个覆盖层中加载 Wiki。
 
-## 安装与使用
+- 在游戏聊天栏输入 `/gwo config`，打开覆盖层设置。可以调整窗口、缩放、透明度等选项。
+- 阅读 Wiki 后，若要回到 Garland，可在设置中选中 **Garland** 并点击 **Reload**，或输入 `/gwo overlay garland reload`。这会重新打开该覆盖层设置中保存的 URL。
+- 若启用了 **Click Through**（鼠标点击穿透），鼠标操作会交给游戏；需要点击网页时，请先在设置中关闭该选项。
 
-构建得到的 `dist/GarlandWikiOverlay-0.1.0.zip` 是卫月插件安装包。首次加载会从原 Browsingway 项目的发布页下载 CefSharp 浏览器依赖，并用 SHA256 校验；它不包含在 ZIP 中。该依赖下载需要能访问 GitHub。
+`/gwo overlay garland reload` 适用于默认名称为 Garland 的覆盖层。如果改了覆盖层名称，命令中的 `garland` 也会相应改变。
 
-插件与原 Browsingway 使用不同的程序集、配置目录、命令、渲染器名称和进程间通信标识，可作为独立插件安装。Wiki 页面打开后，可用浏览器返回快捷键或在设置中重新导航到 Garland；聊天命令 `/gwo overlay garland reload` 会重新加载 Garland 默认地址。
+## 常见问题
 
-## 发布到自己的卫月自定义仓库
+**找不到 Wiki 链接？** 插件只处理 Garland 页面已经提供、并由你点击的灰机 Wiki 链接；它不会为每个副本自动生成攻略链接。可以先确认当前 Garland 资料页是否有相应入口。
 
-当前独立仓库是 [yooou-yur/yoooou](https://github.com/yooou-yur/yoooou)。仓库根目录的 `repo.json` 是卫月插件清单，安装包存放在 `dist/`。
+**首次启动一直提示安装依赖？** 浏览器依赖不包含在插件安装包中，需要在游戏内确认下载，并确保能够访问上述 GitHub 发布页。
 
-1. 修改源码后运行 `./build.ps1`，将新版本安装包与源码一起提交到此仓库。
-2. 同步更新 `repo.json` 的 `AssemblyVersion` 与 ZIP 下载链接。`repo.template.json` 可作为后续版本的清单模板。
-3. 在卫月自定义插件仓库设置中添加 `https://raw.githubusercontent.com/yooou-yur/yoooou/main/repo.json`。
+**点击其他网站的链接仍出现新窗口？** 当前的同窗跳转仅针对 Garland 页面中用户点击的 `https://ff14.huijiwiki.com/` 链接。
 
-这套清单仅发布本插件，不会修改官方插件仓库或原 Browsingway 仓库。发布二进制时，同时公开对应版本的完整 GPL-3.0 源码、LICENSE 和 NOTICE.md。
+## 项目与许可
+
+这是基于 [Browsingway](https://github.com/Styr1x/Browsingway) 的独立修改版，采用 GPL-3.0 许可证；它不代表原项目作者或 Garland Tools、灰机 Wiki 官方。源码、[许可证](LICENSE)和[修改与来源说明](NOTICE.md)均在本仓库。问题反馈可使用本仓库的 [Issues](https://github.com/yooou-yur/yoooou/issues)。
+
+开发和构建说明见 [DEVELOPMENT.md](DEVELOPMENT.md)。
