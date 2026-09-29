@@ -15,5 +15,5 @@
         "website",
         "video"
     ],
-    "Changelog": "0.1.1：将插件作者名称更新为 yoooou。"
+    "Changelog": "0.1.2：聊天命令切换 Disabled 时同步创建或销毁浏览器覆盖层。"
 }

@@ -116,8 +116,13 @@ internal class Settings : IDisposable
 				CommandSettingBoolean(args[2], ref targetConfig.Muted);
 				break;
 			case "disabled":
+			{
+				bool wasDisabled = targetConfig.Disabled;
 				CommandSettingBoolean(args[2], ref targetConfig.Disabled);
+				if (targetConfig.Disabled != wasDisabled)
+					UpdateDisabledOverlay(targetConfig);
 				break;
+			}
 			case "act":
 				CommandSettingBoolean(args[2], ref targetConfig.ActOptimizations);
 				break;
@@ -196,6 +201,14 @@ internal class Settings : IDisposable
 	private void UpdateMuteOverlay(InlayConfiguration overlayConfig)
 	{
 		OverlayMuted?.Invoke(this, overlayConfig);
+	}
+
+	private void UpdateDisabledOverlay(InlayConfiguration overlayConfig)
+	{
+		if (overlayConfig.Disabled)
+			OverlayRemoved?.Invoke(this, overlayConfig);
+		else
+			OverlayAdded?.Invoke(this, overlayConfig);
 	}
 
 	private void UpdateUserCss(InlayConfiguration overlayConfig)
@@ -440,10 +453,7 @@ internal class Settings : IDisposable
 
 		if (ImGui.Checkbox("Disabled", ref overlayConfig.Disabled))
 		{
-			if (overlayConfig.Disabled)
-				OverlayRemoved?.Invoke(this, overlayConfig);
-			else
-				OverlayAdded?.Invoke(this, overlayConfig);
+			UpdateDisabledOverlay(overlayConfig);
 			dirty = true;
 		}
 

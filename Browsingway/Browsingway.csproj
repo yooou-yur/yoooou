@@ -10,7 +10,7 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<LangVersion>latestmajor</LangVersion>
 		<AssemblyName>GarlandWikiOverlay</AssemblyName>
-		<Version>0.1.1.0</Version>
+		<Version>0.1.2.0</Version>
 		<OutputPath Condition="'$(GWO_BUILD_ROOT)' == ''">..\out</OutputPath>
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 	</PropertyGroup>
