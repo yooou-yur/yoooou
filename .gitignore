@@ -6,3 +6,4 @@ packages/
 *.sln.DotSettings.user
 .tools/
 .cache/
+/DEVELOPMENT.md

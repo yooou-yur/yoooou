@@ -79,5 +79,3 @@
 ## 项目与许可
 
 这是基于 [Browsingway](https://github.com/Styr1x/Browsingway) 的独立修改版，采用 GPL-3.0 许可证；它不代表原项目作者或 Garland Tools、灰机 Wiki 官方。源码、[许可证](LICENSE)和[修改与来源说明](NOTICE.md)均在本仓库。问题反馈可使用本仓库的 [Issues](https://github.com/yooou-yur/yoooou/issues)。
-
-开发和构建说明见 [DEVELOPMENT.md](DEVELOPMENT.md)。
